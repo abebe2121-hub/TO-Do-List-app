@@ -1,0 +1,465 @@
+
+.register-page {
+  --register-primary: var(--primary-color, #4f46e5);
+  --register-primary-hover: var(--primary-hover, #4338ca);
+  --register-text: var(--text-color, #1f2937);
+  --register-muted: var(--text-muted, #6b7280);
+  --register-border: var(--border-color, #d1d5db);
+  --register-surface: var(--surface-color, #ffffff);
+  --register-background: var(--background-color, #f3f4f6);
+  --register-danger: #b91c1c;
+
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 32px 20px;
+  color: var(--register-text);
+  background: var(--register-background);
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+}
+
+.register-page *,
+.register-page *::before,
+.register-page *::after {
+  box-sizing: border-box;
+}
+
+.register-shell {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  width: 100%;
+  max-width: 1050px;
+  overflow: hidden;
+  background: var(--register-surface);
+  border: 1px solid var(--register-border);
+  border-radius: 24px;
+  box-shadow: 0 24px 70px rgb(15 23 42 / 10%);
+}
+
+.register-showcase {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 40px;
+  color: #ffffff;
+  background:
+    radial-gradient(
+      circle at 85% 15%,
+      rgb(255 255 255 / 16%),
+      transparent 32%
+    ),
+    linear-gradient(145deg, #4338ca 0%, #3730a3 55%, #1e1b4b 100%);
+}
+
+.register-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
+  width: fit-content;
+  color: inherit;
+  font-size: 1.35rem;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.register-brand-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  color: #4338ca;
+  background: #ffffff;
+  border-radius: 12px;
+  font-size: 1.35rem;
+  font-weight: 800;
+}
+
+.register-showcase-content {
+  max-width: 350px;
+  margin: 48px 0;
+}
+
+.register-eyebrow {
+  display: inline-block;
+  margin-bottom: 16px;
+  color: #c7d2fe;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  line-height: 1.6;
+}
+
+.register-showcase-content h2 {
+  margin: 0 0 18px;
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  line-height: 1.12;
+  letter-spacing: -0.04em;
+}
+
+.register-showcase-content > p {
+  margin: 0 0 28px;
+  color: #e0e7ff;
+  font-size: 0.98rem;
+  line-height: 1.8;
+}
+
+.register-feature {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 16px;
+  color: #f5f7ff;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.register-feature > span:first-child {
+  display: grid;
+  place-items: center;
+  width: 25px;
+  height: 25px;
+  flex-shrink: 0;
+  color: #ffffff;
+  background: rgb(255 255 255 / 16%);
+  border: 1px solid rgb(255 255 255 / 25%);
+  border-radius: 50%;
+}
+
+.register-showcase-footer {
+  margin: 0;
+  color: #c7d2fe;
+  font-size: 0.82rem;
+  line-height: 1.6;
+}
+
+.register-form-panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 44px clamp(28px, 5vw, 60px);
+}
+
+.register-form-header {
+  margin-bottom: 27px;
+}
+
+.register-form-header h1 {
+  margin: 0 0 10px;
+  color: var(--register-text);
+  font-size: clamp(1.8rem, 4vw, 2.2rem);
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.04em;
+}
+
+.register-form-header > p {
+  margin: 0;
+  color: var(--register-muted);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.register-mobile-brand {
+  display: none;
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 19px;
+}
+
+.register-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.register-field > label {
+  color: var(--register-text);
+  font-size: 0.9rem;
+  font-weight: 650;
+}
+
+.register-field input:not([type="checkbox"]) {
+  width: 100%;
+  min-height: 47px;
+  padding: 11px 14px;
+  color: var(--register-text);
+  background: var(--register-surface);
+  border: 1px solid var(--register-border);
+  border-radius: 10px;
+  outline: none;
+  font: inherit;
+  font-size: 0.92rem;
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.register-field input::placeholder {
+  color: #9ca3af;
+}
+
+.register-field input:not([type="checkbox"]):focus {
+  border-color: var(--register-primary);
+  box-shadow: 0 0 0 3px rgb(79 70 229 / 14%);
+}
+
+.register-field input[aria-invalid="true"] {
+  border-color: var(--register-danger);
+}
+
+.register-field input:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.register-password-wrapper {
+  position: relative;
+}
+
+.register-password-wrapper input {
+  padding-right: 72px !important;
+}
+
+.register-password-toggle {
+  position: absolute;
+  top: 50%;
+  right: 13px;
+  transform: translateY(-50%);
+  padding: 6px 3px;
+  color: var(--register-primary);
+  background: transparent;
+  border: none;
+  border-radius: 4px;
+  font: inherit;
+  font-size: 0.84rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.register-password-toggle:hover {
+  color: var(--register-primary-hover);
+}
+
+.register-password-toggle:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.register-field-hint {
+  margin: 0;
+  color: var(--register-muted);
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+
+.register-field-error {
+  margin: 0;
+  color: var(--register-danger);
+  font-size: 0.81rem;
+  line-height: 1.45;
+}
+
+.register-terms-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.register-terms-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  color: var(--register-muted);
+  font-size: 0.84rem;
+  line-height: 1.6;
+  cursor: pointer;
+}
+
+.register-terms-label input {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  margin: 3px 0 0;
+  accent-color: var(--register-primary);
+  cursor: pointer;
+}
+
+.register-terms-label input[aria-invalid="true"] {
+  outline: 2px solid var(--register-danger);
+  outline-offset: 2px;
+}
+
+.register-submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 49px;
+  margin-top: 2px;
+  padding: 13px 18px;
+  color: #ffffff;
+  background: var(--register-primary);
+  border: 1px solid transparent;
+  border-radius: 10px;
+  font: inherit;
+  font-size: 0.95rem;
+  font-weight: 750;
+  cursor: pointer;
+  transition:
+    background-color 160ms ease,
+    transform 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.register-submit:hover:not(:disabled) {
+  background: var(--register-primary-hover);
+  box-shadow: 0 7px 18px rgb(79 70 229 / 20%);
+  transform: translateY(-1px);
+}
+
+.register-submit:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.register-spinner {
+  width: 17px;
+  height: 17px;
+  border: 2px solid rgb(255 255 255 / 45%);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: register-spin 700ms linear infinite;
+}
+
+.register-alert,
+.register-success {
+  padding: 12px 14px;
+  border-radius: 9px;
+  font-size: 0.87rem;
+  line-height: 1.5;
+}
+
+.register-alert {
+  color: var(--register-danger);
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+}
+
+.register-success {
+  color: #166534;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+}
+
+.register-login-prompt {
+  margin: 24px 0 0;
+  color: var(--register-muted);
+  font-size: 0.88rem;
+  line-height: 1.7;
+  text-align: center;
+}
+
+.register-login-prompt a {
+  color: var(--register-primary);
+  font-weight: 750;
+  text-decoration: none;
+}
+
+.register-login-prompt a:hover {
+  color: var(--register-primary-hover);
+  text-decoration: underline;
+}
+
+.register-security-note {
+  margin: 17px 0 0;
+  color: var(--register-muted);
+  font-size: 0.76rem;
+  line-height: 1.6;
+  text-align: center;
+}
+
+.register-page a:focus-visible,
+.register-page button:focus-visible,
+.register-page input:focus-visible {
+  outline: 3px solid rgb(99 102 241 / 45%);
+  outline-offset: 3px;
+}
+
+@keyframes register-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 800px) {
+  .register-page {
+    padding: 24px 16px;
+  }
+
+  .register-shell {
+    grid-template-columns: 1fr;
+    max-width: 540px;
+  }
+
+  .register-showcase {
+    display: none;
+  }
+
+  .register-form-panel {
+    padding: 36px clamp(24px, 7vw, 48px);
+  }
+
+  .register-mobile-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 25px;
+    font-size: 1.15rem;
+    font-weight: 800;
+  }
+
+  .register-mobile-brand .register-brand-icon {
+    color: #ffffff;
+    background: var(--register-primary);
+  }
+}
+
+@media (max-width: 420px) {
+  .register-page {
+    display: block;
+    padding: 12px;
+  }
+
+  .register-shell {
+    border-radius: 16px;
+  }
+
+  .register-form-panel {
+    padding: 27px 20px;
+  }
+
+  .register-form-header {
+    margin-bottom: 23px;
+  }
+
+  .register-form {
+    gap: 17px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .register-page *,
+  .register-page *::before,
+  .register-page *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}

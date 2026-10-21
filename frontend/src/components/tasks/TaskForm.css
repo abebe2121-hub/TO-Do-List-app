@@ -1,0 +1,222 @@
+
+/* =========================================
+   TaskFlow - Task Form
+   ========================================= */
+
+.task-form {
+  width: 100%;
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 28px;
+  background: var(--color-surface, #ffffff);
+  color: var(--color-text, #1f2937);
+  border: 1px solid var(--color-border, #e5e7eb);
+  border-radius: 16px;
+  box-shadow: 0 8px 28px rgb(15 23 42 / 6%);
+}
+
+.task-form__heading {
+  margin-bottom: 26px;
+}
+
+.task-form__title {
+  margin: 0 0 8px;
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--color-heading, #111827);
+}
+
+.task-form__subtitle {
+  margin: 0;
+  color: var(--color-muted, #6b7280);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.task-form__group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+  margin-bottom: 22px;
+}
+
+.task-form__row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.task-form__label {
+  color: var(--color-heading, #374151);
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.task-form__label span {
+  color: #dc2626;
+}
+
+.task-form__input,
+.task-form__textarea,
+.task-form__select {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  padding: 12px 14px;
+  border: 1px solid var(--color-border, #d1d5db);
+  border-radius: 9px;
+  background: var(--color-input-bg, #ffffff);
+  color: var(--color-text, #1f2937);
+  font: inherit;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    background-color 160ms ease;
+}
+
+.task-form__input::placeholder,
+.task-form__textarea::placeholder {
+  color: var(--color-placeholder, #9ca3af);
+}
+
+.task-form__textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+
+.task-form__select {
+  cursor: pointer;
+}
+
+.task-form__input:hover,
+.task-form__textarea:hover,
+.task-form__select:hover {
+  border-color: #9ca3af;
+}
+
+.task-form__input:focus-visible,
+.task-form__textarea:focus-visible,
+.task-form__select:focus-visible {
+  outline: 3px solid rgb(79 70 229 / 20%);
+  outline-offset: 1px;
+  border-color: var(--color-primary, #4f46e5);
+}
+
+.task-form__input--error {
+  border-color: #dc2626;
+}
+
+.task-form__input--error:focus-visible {
+  outline-color: rgb(220 38 38 / 20%);
+  border-color: #dc2626;
+}
+
+.task-form__help {
+  margin: 0;
+  color: var(--color-muted, #6b7280);
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+.task-form__error,
+.task-form__form-error {
+  margin: 0;
+  color: #b91c1c;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.task-form__error {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.task-form__error::before {
+  content: "!";
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 17px;
+  width: 17px;
+  height: 17px;
+  margin-top: 1px;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.task-form__form-error {
+  margin: 4px 0 18px;
+  padding: 12px 14px;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  background: #fef2f2;
+}
+
+.task-form__actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid var(--color-border, #e5e7eb);
+}
+
+.task-form__actions button {
+  min-width: 120px;
+}
+
+/* Disabled fields remain readable while saving. */
+.task-form__input:disabled,
+.task-form__textarea:disabled,
+.task-form__select:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+  background: var(--color-disabled-bg, #f3f4f6);
+}
+
+.task-form__actions button:disabled {
+  cursor: not-allowed;
+}
+
+/* Tablet and mobile layouts. */
+@media (max-width: 640px) {
+  .task-form {
+    padding: 22px 18px;
+    border-radius: 12px;
+  }
+
+  .task-form__title {
+    font-size: 1.3rem;
+  }
+
+  .task-form__row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .task-form__actions {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+  .task-form__actions button {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .task-form__input,
+  .task-form__textarea,
+  .task-form__select {
+    transition: none;
+  }
+}

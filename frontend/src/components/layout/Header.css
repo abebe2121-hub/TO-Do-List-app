@@ -1,0 +1,271 @@
+
+/* ==============================
+   Header
+============================== */
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  width: 100%;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+}
+
+.header__container {
+  width: min(100% - 40px, 1200px);
+  min-height: 72px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+/* ==============================
+   Branding
+============================== */
+
+.header__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: #111827;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.header__brand-icon {
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background-color: #4f46e5;
+  color: #ffffff;
+  font-size: 23px;
+  font-weight: 700;
+}
+
+.header__brand-name {
+  font-size: 23px;
+  font-weight: 750;
+  letter-spacing: -0.7px;
+}
+
+/* ==============================
+   Navigation
+============================== */
+
+.header__nav {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.header__link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 14px;
+  border-radius: 8px;
+  color: #4b5563;
+  font-size: 15px;
+  font-weight: 500;
+  text-decoration: none;
+  transition:
+    color 180ms ease,
+    background-color 180ms ease;
+}
+
+.header__link:hover,
+.header__link--active {
+  color: #4338ca;
+  background-color: #eef2ff;
+}
+
+.header__register {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 18px;
+  border: 1px solid #4f46e5;
+  border-radius: 8px;
+  background-color: #4f46e5;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease;
+}
+
+.header__register:hover,
+.header__register--active {
+  border-color: #3730a3;
+  background-color: #3730a3;
+  color: #ffffff;
+}
+
+/* ==============================
+   Authentication actions
+============================== */
+
+.header__user-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.header__user-name {
+  color: #374151;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.header__logout {
+  padding: 9px 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  background-color: #ffffff;
+  color: #374151;
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease;
+}
+
+.header__logout:hover {
+  border-color: #9ca3af;
+  background-color: #f3f4f6;
+}
+
+/* ==============================
+   Mobile menu button
+============================== */
+
+.header__menu-toggle {
+  display: none;
+  width: 42px;
+  height: 42px;
+  padding: 10px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background-color: #ffffff;
+  cursor: pointer;
+}
+
+.header__menu-line {
+  display: block;
+  width: 20px;
+  height: 2px;
+  border-radius: 2px;
+  background-color: #374151;
+}
+
+/* ==============================
+   Keyboard accessibility
+============================== */
+
+.header a:focus-visible,
+.header button:focus-visible {
+  outline: 3px solid #818cf8;
+  outline-offset: 3px;
+}
+
+/* ==============================
+   Tablet and mobile
+============================== */
+
+@media (max-width: 768px) {
+  .header__container {
+    width: calc(100% - 32px);
+    min-height: 66px;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 10px 0;
+  }
+
+  .header__brand-name {
+    font-size: 21px;
+  }
+
+  .header__menu-toggle {
+    display: flex;
+  }
+
+  .header__nav {
+    display: none;
+    width: 100%;
+    padding: 12px 0 4px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    border-top: 1px solid #f3f4f6;
+  }
+
+  .header__nav--open {
+    display: flex;
+  }
+
+  .header__link,
+  .header__register {
+    width: 100%;
+    min-height: 44px;
+    justify-content: flex-start;
+    padding: 12px 14px;
+  }
+
+  .header__register {
+    justify-content: center;
+  }
+
+  .header__user-actions {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .header__logout {
+    min-height: 44px;
+  }
+}
+
+/* ==============================
+   Small phones
+============================== */
+
+@media (max-width: 380px) {
+  .header__container {
+    width: calc(100% - 24px);
+  }
+
+  .header__brand-name {
+    font-size: 19px;
+  }
+
+  .header__brand-icon {
+    width: 32px;
+    height: 32px;
+    font-size: 21px;
+  }
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .header__link,
+  .header__register,
+  .header__logout {
+    transition: none;
+  }
+}
+

@@ -1,0 +1,286 @@
+
+/* =========================================
+   1. APPLICATION WRAPPER
+   ========================================= */
+
+.app {
+  --app-primary: #4f46e5;
+  --app-primary-hover: #4338ca;
+  --app-background: #2c76c0;
+  --app-surface: #ca3636;
+  --app-border: #3179d8;
+  --app-text: #1e293b;
+  --app-text-muted: #64748b;
+  --app-radius: 12px;
+  --app-content-width: 1440px;
+
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-width: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+
+  color: var(--app-text);
+  background-color: #f7f2f2;
+  font-family: inherit;
+}
+
+/* =========================================
+   2. MAIN LAYOUT
+   ========================================= */
+
+/*
+  Optional shared layout wrapper.
+  Use this when Header, Sidebar, and main
+  content need to share a common layout.
+*/
+
+.app-layout {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+}
+
+/*
+  Main dashboard row.
+  Sidebar appears beside the page content.
+*/
+
+.app-layout__body {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: stretch;
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+}
+
+/* =========================================
+   3. PAGE CONTENT CONTAINER
+   ========================================= */
+
+.app-main {
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 0;
+  padding: 24px;
+  overflow-wrap: anywhere;
+}
+
+.page-container {
+  width: 100%;
+  max-width: var(--app-content-width);
+  margin-inline: auto;
+}
+
+/* Optional page heading section */
+
+.page-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.page-header__title {
+  margin: 0;
+  color: var(--app-text);
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.page-header__description {
+  margin: 8px 0 0;
+  color: var(--app-text-muted);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* =========================================
+   4. SHARED LAYOUT SUPPORT
+   ========================================= */
+
+/*
+  These classes provide layout support only.
+  Header.css, Sidebar.css, Footer.css, and
+  page stylesheets should style their own UI.
+*/
+
+.app-sidebar {
+  flex: 0 0 260px;
+  width: 260px;
+  min-width: 0;
+}
+
+.app-content {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.app-footer {
+  flex-shrink: 0;
+  width: 100%;
+  margin-top: auto;
+}
+
+/* Optional reusable surface */
+
+.app-surface {
+  min-width: 0;
+  padding: 24px;
+  background-color: black;
+  border: 1px solid var(--app-border);
+  border-radius: var(--app-radius);
+}
+
+/* =========================================
+   5. INTERACTIVE STATES
+   ========================================= */
+
+/*
+  Apply the app-primary class to an element
+  when it needs the shared primary color.
+*/
+
+.app-primary {
+  color: var(--app-primary);
+}
+
+/*
+  Keyboard focus support for interactive
+  elements inside the application.
+*/
+
+.app :where(
+  a,
+  button,
+  input,
+  select,
+  textarea,
+  [tabindex]:not([tabindex="-1"])
+):focus-visible {
+  outline: 3px solid var(--app-primary);
+  outline-offset: 3px;
+}
+
+/* Keep disabled controls visually clear. */
+
+.app :where(button, input, select, textarea):disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* =========================================
+   6. ACCESSIBILITY AND REDUCED MOTION
+   ========================================= */
+
+@media (prefers-reduced-motion: no-preference) {
+  .app {
+    transition:
+      background-color 180ms ease,
+      color 180ms ease;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app *,
+  .app *::before,
+  .app *::after {
+    scroll-behavior: auto;
+    animation-duration: 0.01ms;
+    animation-iteration-count: 1;
+    transition-duration: 0.01ms;
+  }
+}
+
+/* =========================================
+   7. RESPONSIVE MEDIA QUERIES
+   ========================================= */
+
+/* Desktop: 1024px and above */
+
+@media (min-width: 1024px) {
+  .app-main {
+    padding: 32px;
+  }
+
+  .app-surface {
+    padding: 28px;
+  }
+}
+
+/* Tablet: 768px–1023px */
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .app-main {
+    padding: 24px;
+  }
+
+  .app-sidebar {
+    flex-basis: 220px;
+    width: 220px;
+  }
+
+  .app-surface {
+    padding: 20px;
+  }
+}
+
+/* Mobile: below 768px */
+
+@media (max-width: 767px) {
+  .app-layout__body {
+    flex-direction: column;
+  }
+
+  .app-sidebar {
+    flex: 0 0 auto;
+    width: 100%;
+  }
+
+  .app-main {
+    padding: 20px 16px;
+  }
+
+  .page-header {
+    align-items: flex-start;
+    margin-bottom: 20px;
+  }
+
+  .app-surface {
+    padding: 18px;
+    border-radius: 10px;
+  }
+}
+
+/* Small mobile: below 480px */
+
+@media (max-width: 479px) {
+  .app-main {
+    padding: 16px 12px;
+  }
+
+  .page-header {
+    gap: 12px;
+  }
+
+  .page-header__title {
+    font-size: 1.4rem;
+  }
+
+  .page-header__description {
+    font-size: 0.875rem;
+  }
+
+  .app-surface {
+    padding: 14px;
+    border-radius: 8px;
+  }
+}

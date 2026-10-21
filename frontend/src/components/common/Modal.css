@@ -1,0 +1,146 @@
+
+/* Modal backdrop */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  overflow-y: auto;
+  background: rgba(15, 23, 42, 0.55);
+  animation: modal-backdrop-enter 160ms ease-out;
+}
+
+/* Modal panel */
+.modal {
+  display: flex;
+  width: 100%;
+  max-height: calc(100vh - 40px);
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--color-border, #e5e7eb);
+  border-radius: 14px;
+  background: var(--color-surface, #ffffff);
+  color: var(--color-text, #111827);
+  box-shadow: 0 20px 60px rgba(15, 23, 42, 0.25);
+  animation: modal-panel-enter 180ms ease-out;
+}
+
+/* Modal sizes */
+.modal--small {
+  max-width: 400px;
+}
+
+.modal--medium {
+  max-width: 560px;
+}
+
+.modal--large {
+  max-width: 800px;
+}
+
+/* Modal header */
+.modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--color-border, #e5e7eb);
+}
+
+.modal__title {
+  margin: 0;
+  color: var(--color-text, #111827);
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+/* Close button */
+.modal__close {
+  width: 36px;
+  min-width: 36px;
+  height: 36px;
+  padding: 0;
+  flex-shrink: 0;
+  font-size: 24px;
+  line-height: 1;
+}
+
+/* Modal content */
+.modal__body {
+  padding: 24px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  overflow-wrap: anywhere;
+}
+
+/* Animations */
+@keyframes modal-backdrop-enter {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modal-panel-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.99);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Keyboard focus */
+.modal a:focus-visible,
+.modal button:focus-visible,
+.modal input:focus-visible,
+.modal select:focus-visible,
+.modal textarea:focus-visible {
+  outline: 3px solid #818cf8;
+  outline-offset: 3px;
+}
+
+/* Responsive layout */
+@media (max-width: 600px) {
+  .modal-backdrop {
+    align-items: center;
+    padding: 12px;
+  }
+
+  .modal {
+    max-height: calc(100vh - 24px);
+    border-radius: 12px;
+  }
+
+  .modal__header {
+    padding: 16px;
+  }
+
+  .modal__title {
+    font-size: 18px;
+  }
+
+  .modal__body {
+    padding: 16px;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .modal-backdrop,
+  .modal {
+    animation: none;
+  }
+}

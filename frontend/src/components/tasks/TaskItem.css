@@ -1,0 +1,319 @@
+
+/* =========================================
+   TaskFlow - Task Item Card
+   ========================================= */
+
+.task-item {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 22px;
+  width: 100%;
+  padding: 22px;
+  border: 1px solid var(--color-border, #e5e7eb);
+  border-radius: 14px;
+  background: var(--color-surface, #ffffff);
+  color: var(--color-text, #1f2937);
+  box-shadow: 0 3px 12px rgb(15 23 42 / 4%);
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease,
+    opacity 160ms ease;
+}
+
+.task-item:hover {
+  border-color: var(--color-primary, #6366f1);
+  box-shadow: 0 7px 20px rgb(15 23 42 / 8%);
+}
+
+.task-item__main {
+  display: flex;
+  flex: 1;
+  align-items: flex-start;
+  gap: 15px;
+  min-width: 0;
+}
+
+.task-item__checkbox-label {
+  position: relative;
+  display: inline-flex;
+  flex: 0 0 22px;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  margin-top: 3px;
+  cursor: pointer;
+}
+
+.task-item__checkbox {
+  position: absolute;
+  z-index: 1;
+  width: 22px;
+  height: 22px;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.task-item__checkbox-visual {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--color-border, #9ca3af);
+  border-radius: 6px;
+  background: var(--color-surface, #ffffff);
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease;
+}
+
+.task-item__checkbox:checked + .task-item__checkbox-visual {
+  border-color: var(--color-primary, #4f46e5);
+  background: var(--color-primary, #4f46e5);
+}
+
+.task-item__checkbox:checked + .task-item__checkbox-visual::after {
+  width: 5px;
+  height: 9px;
+  border: solid #ffffff;
+  border-width: 0 2px 2px 0;
+  content: "";
+  transform: translateY(-1px) rotate(45deg);
+}
+
+.task-item__checkbox:focus-visible + .task-item__checkbox-visual {
+  outline: 3px solid rgb(79 70 229 / 25%);
+  outline-offset: 3px;
+}
+
+.task-item__checkbox:disabled {
+  cursor: not-allowed;
+}
+
+.task-item__checkbox:disabled + .task-item__checkbox-visual {
+  opacity: 0.6;
+}
+
+.task-item__content {
+  flex: 1;
+  min-width: 0;
+}
+
+.task-item__title-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin-bottom: 7px;
+}
+
+.task-item__title {
+  margin: 0;
+  color: var(--color-heading, #111827);
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.task-item__description {
+  margin: 0 0 14px;
+  color: var(--color-muted, #6b7280);
+  font-size: 0.92rem;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+.task-item__description--empty {
+  font-style: italic;
+}
+
+.task-item__metadata {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 13px;
+}
+
+.task-item__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  width: fit-content;
+  max-width: 100%;
+  padding: 5px 10px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  font-size: 0.76rem;
+  font-weight: 600;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.task-item__priority--low {
+  border-color: #a7f3d0;
+  background: #ecfdf5;
+  color: #065f46;
+}
+
+.task-item__priority--medium {
+  border-color: #fde68a;
+  background: #fffbeb;
+  color: #92400e;
+}
+
+.task-item__priority--high {
+  border-color: #fecaca;
+  background: #fef2f2;
+  color: #991b1b;
+}
+
+.task-item__category {
+  border-color: #c7d2fe;
+  background: #eef2ff;
+  color: #3730a3;
+}
+
+.task-item__status--pending {
+  border-color: #d1d5db;
+  background: #f3f4f6;
+  color: #374151;
+}
+
+.task-item__status--in-progress {
+  border-color: #bae6fd;
+  background: #f0f9ff;
+  color: #075985;
+}
+
+.task-item__status--completed {
+  border-color: #a7f3d0;
+  background: #ecfdf5;
+  color: #065f46;
+}
+
+.task-item__due-date {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  color: var(--color-muted, #6b7280);
+  font-size: 0.84rem;
+  line-height: 1.5;
+}
+
+.task-item__due-date > span:first-child {
+  font-size: 1rem;
+}
+
+.task-item__due-date--overdue {
+  color: #b91c1c;
+  font-weight: 600;
+}
+
+.task-item__overdue-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 8px;
+  border: 1px solid #fecaca;
+  border-radius: 6px;
+  background: #fef2f2;
+  color: #991b1b;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.task-item__actions {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* Completed tasks remain readable but look different. */
+.task-item--completed {
+  background: var(--color-completed-bg, #f9fafb);
+}
+
+.task-item--completed .task-item__title {
+  color: var(--color-muted, #6b7280);
+  text-decoration: line-through;
+  text-decoration-thickness: 1.5px;
+}
+
+.task-item--completed .task-item__description {
+  color: var(--color-muted, #9ca3af);
+}
+
+/* Overdue tasks have an additional visual warning. */
+.task-item--overdue {
+  border-left: 4px solid #dc2626;
+}
+
+.task-item--deleting {
+  opacity: 0.65;
+}
+
+.task-item button:focus-visible {
+  outline: 3px solid rgb(79 70 229 / 25%);
+  outline-offset: 3px;
+}
+
+.task-item button:disabled {
+  cursor: not-allowed;
+}
+
+/* Tablet and mobile layouts. */
+@media (max-width: 640px) {
+  .task-item {
+    flex-direction: column;
+    gap: 18px;
+    padding: 17px;
+  }
+
+  .task-item__main {
+    gap: 12px;
+    width: 100%;
+  }
+
+  .task-item__actions {
+    justify-content: flex-end;
+    width: 100%;
+    padding-top: 14px;
+    border-top: 1px solid var(--color-border, #e5e7eb);
+  }
+}
+
+@media (max-width: 380px) {
+  .task-item__actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .task-item__actions button {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .task-item__metadata {
+    gap: 6px;
+  }
+
+  .task-item__badge {
+    padding: 4px 8px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .task-item,
+  .task-item__checkbox-visual {
+    transition: none;
+  }
+}
