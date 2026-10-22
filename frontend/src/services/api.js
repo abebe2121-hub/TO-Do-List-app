@@ -1,23 +1,25 @@
 
-import axios from 'axios';
+
+import axios from "axios";
 
 // Backend API URL from the Vite environment.
-const API_BASE_URL =
-  import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+const API_BASE_URL = (
+  import.meta.env.VITE_API_URL || "http://localhost:5000/api"
+).replace(/\/+$/, "");
 
 // Create one reusable Axios instance.
 const api = axios.create({
   baseURL: API_BASE_URL,
   timeout: 10000,
   headers: {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   },
 });
 
 // Attach the JWT token when one is available.
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
 
     if (token) {
       config.headers = config.headers || {};
@@ -26,21 +28,25 @@ api.interceptors.request.use(
 
     return config;
   },
-  (error) => Promise.reject(error)
+  (error) => Promise.reject(error),
 );
 
-// Keep successful responses unchanged and preserve HTTP/network errors.
+// Handle successful responses and preserve errors.
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    // The request was sent, but no HTTP response was received.
+
     if (!error.response) {
       error.isNetworkError = true;
+      error.message =
+        error.code === "ECONNABORTED"
+          ? "The request timed out. Please try again."
+          : "Cannot connect to the server. Check that the backend is running.";
     }
 
-    // Pass the original error to the calling service.
+
     return Promise.reject(error);
-  }
+  },
 );
 
 export default api;

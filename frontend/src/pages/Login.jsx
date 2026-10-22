@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { validateLoginForm } from "../services/validators.js";
+import { loginUser } from "../services/authService.js";
 import "./Login.css";
 
-function Login({ onLogin }) {
+function Login() {
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
@@ -30,6 +30,7 @@ function Login({ onLogin }) {
     }
 
     setErrors(newErrors);
+
     return Object.keys(newErrors).length === 0;
   }
 
@@ -42,36 +43,41 @@ function Login({ onLogin }) {
 
     if (!validateForm()) return;
 
-    if (typeof onLogin !== "function") {
-      setServerError(
-        "Login is not connected yet. Please configure the authentication service.",
-      );
-      return;
-    }
-
     setIsSubmitting(true);
 
     try {
-      // The password is sent unchanged.
-      // The authentication handler must verify credentials with the backend.
-      const result = await onLogin({
-        email: email.trim(),
+      const result = await loginUser({
+        email: email.trim().toLowerCase(),
         password,
-        rememberMe,
       });
 
       if (result?.success !== true) {
-        setServerError(
+        throw new Error(
           result?.message || "Unable to sign in. Please check your details.",
         );
-        return;
       }
 
-      // Navigate only after the authentication handler confirms success.
+      const token = result.token || result.data?.token;
+      const user = result.user || result.data?.user;
+
+      if (!token) {
+        throw new Error(
+          "Login succeeded, but the server did not return an authentication token.",
+        );
+      }
+
+      localStorage.setItem("token", token);
+
+      if (user) {
+        localStorage.setItem("user", JSON.stringify(user));
+      }
+
       navigate(result.redirectTo || "/");
     } catch (error) {
       setServerError(
-        error?.message || "A connection error occurred. Please try again.",
+        error.response?.data?.message ||
+          error.message ||
+          "A connection error occurred. Please try again.",
       );
     } finally {
       setIsSubmitting(false);
@@ -80,19 +86,23 @@ function Login({ onLogin }) {
 
   function handleEmailChange(event) {
     setEmail(event.target.value);
+
     setErrors((currentErrors) => ({
       ...currentErrors,
       email: "",
     }));
+
     setServerError("");
   }
 
   function handlePasswordChange(event) {
     setPassword(event.target.value);
+
     setErrors((currentErrors) => ({
       ...currentErrors,
       password: "",
     }));
+
     setServerError("");
   }
 
@@ -109,7 +119,9 @@ function Login({ onLogin }) {
 
           <div className="login-showcase-content">
             <span className="login-eyebrow">MAKE EVERY DAY COUNT</span>
+
             <h2>Less stress. More progress.</h2>
+
             <p>
               Organize your tasks, focus on what matters, and make steady
               progress toward your goals.
@@ -153,6 +165,7 @@ function Login({ onLogin }) {
 
             <div className="login-field">
               <label htmlFor="login-email">Email address</label>
+
               <input
                 id="login-email"
                 name="email"
@@ -168,6 +181,7 @@ function Login({ onLogin }) {
                   errors.email ? "login-email-error" : undefined
                 }
               />
+
               {errors.email && (
                 <p className="login-field-error" id="login-email-error">
                   {errors.email}
@@ -222,6 +236,7 @@ function Login({ onLogin }) {
                   onChange={(event) => setRememberMe(event.target.checked)}
                   disabled={isSubmitting}
                 />
+
                 <span>Remember me</span>
               </label>
 

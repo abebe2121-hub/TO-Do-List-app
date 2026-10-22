@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { validateRegisterForm } from "../services/validators.js";
+import { registerUser } from "../services/authService.js";
 import "./Register.css";
 
-function Register({ onRegister }) {
+function Register() {
   const navigate = useNavigate();
 
   const [fullName, setFullName] = useState("");
@@ -27,8 +27,8 @@ function Register({ onRegister }) {
 
     if (!trimmedName) {
       newErrors.fullName = "Full name is required.";
-    } else if (trimmedName.length > 100) {
-      newErrors.fullName = "Full name must be 100 characters or fewer.";
+    } else if (trimmedName.length < 2 || trimmedName.length > 100) {
+      newErrors.fullName = "Full name must be between 2 and 100 characters.";
     }
 
     if (!trimmedEmail) {
@@ -41,8 +41,8 @@ function Register({ onRegister }) {
       newErrors.password = "Password is required.";
     } else if (password.length < 8) {
       newErrors.password = "Password must contain at least 8 characters.";
-    } else if (password.length > 128) {
-      newErrors.password = "Password must be 128 characters or fewer.";
+    } else if (new TextEncoder().encode(password).length > 72) {
+      newErrors.password = "Password must not exceed 72 UTF-8 bytes.";
     }
 
     if (!confirmPassword) {
@@ -69,21 +69,13 @@ function Register({ onRegister }) {
 
     if (!validateForm()) return;
 
-    if (typeof onRegister !== "function") {
-      setServerError(
-        "Registration is not connected yet. Please configure the authentication service.",
-      );
-      return;
-    }
-
     setIsSubmitting(true);
 
     try {
-      const result = await onRegister({
-        fullName: fullName.trim(),
-        email: email.trim(),
+      const result = await registerUser({
+        name: fullName.trim(),
+        email: email.trim().toLowerCase(),
         password,
-        acceptTerms,
       });
 
       if (result?.success !== true) {
@@ -98,17 +90,14 @@ function Register({ onRegister }) {
         result.message || "Your account was created successfully.",
       );
 
-      // Navigate only after the handler confirms successful registration.
-      if (result.redirectTo) {
-        navigate(result.redirectTo);
-      } else {
-        navigate("/login", {
-          state: { registrationSuccess: true },
-        });
-      }
+      navigate("/login", {
+        state: { registrationSuccess: true },
+      });
     } catch (error) {
       setServerError(
-        error?.message || "A connection error occurred. Please try again.",
+        error?.response?.data?.message ||
+          error?.message ||
+          "A connection error occurred. Please try again.",
       );
     } finally {
       setIsSubmitting(false);
@@ -139,7 +128,9 @@ function Register({ onRegister }) {
             <span className="register-eyebrow">
               YOUR NEXT CHAPTER STARTS HERE
             </span>
+
             <h2>Make room for what matters.</h2>
+
             <p>
               Build better habits, organize your priorities, and turn everyday
               plans into meaningful progress.
@@ -213,6 +204,7 @@ function Register({ onRegister }) {
                   errors.fullName ? "register-name-error" : undefined
                 }
               />
+
               {errors.fullName && (
                 <p className="register-field-error" id="register-name-error">
                   {errors.fullName}
@@ -240,6 +232,7 @@ function Register({ onRegister }) {
                   errors.email ? "register-email-error" : undefined
                 }
               />
+
               {errors.email && (
                 <p className="register-field-error" id="register-email-error">
                   {errors.email}
@@ -249,6 +242,7 @@ function Register({ onRegister }) {
 
             <div className="register-field">
               <label htmlFor="register-password">Password</label>
+
               <div className="register-password-wrapper">
                 <input
                   id="register-password"
@@ -258,6 +252,7 @@ function Register({ onRegister }) {
                   onChange={(event) => {
                     setPassword(event.target.value);
                     clearFieldError("password");
+
                     if (confirmPassword) {
                       setErrors((currentErrors) => ({
                         ...currentErrors,
@@ -268,7 +263,6 @@ function Register({ onRegister }) {
                   placeholder="At least 8 characters"
                   autoComplete="new-password"
                   minLength={8}
-                  maxLength={128}
                   required
                   disabled={isSubmitting}
                   aria-invalid={Boolean(errors.password)}
@@ -306,6 +300,7 @@ function Register({ onRegister }) {
               <label htmlFor="register-confirm-password">
                 Confirm password
               </label>
+
               <div className="register-password-wrapper">
                 <input
                   id="register-confirm-password"
@@ -371,6 +366,7 @@ function Register({ onRegister }) {
                     errors.acceptTerms ? "register-terms-error" : undefined
                   }
                 />
+
                 <span>
                   I agree to the Terms and Conditions and Privacy Policy.
                 </span>

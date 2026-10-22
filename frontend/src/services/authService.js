@@ -8,8 +8,12 @@ export async function registerUser(userData) {
 
   const { name, email, password } = userData;
 
-  if (typeof name !== "string" || !name.trim()) {
-    throw new Error("Name is required.");
+  if (typeof name !== "string" || name.trim().length < 2) {
+    throw new Error("Name must contain at least 2 characters.");
+  }
+
+  if (name.trim().length > 100) {
+    throw new Error("Name must be 100 characters or fewer.");
   }
 
   if (typeof email !== "string" || !email.trim()) {
@@ -20,10 +24,17 @@ export async function registerUser(userData) {
     throw new Error("Password is required.");
   }
 
-  // Do not send confirmPassword or unrelated frontend-only fields.
+  if (password.length < 8) {
+    throw new Error("Password must contain at least 8 characters.");
+  }
+
+  if (new TextEncoder().encode(password).length > 72) {
+    throw new Error("Password must not exceed 72 UTF-8 bytes.");
+  }
+
   const response = await api.post("/auth/register", {
     name: name.trim(),
-    email: email.trim(),
+    email: email.trim().toLowerCase(),
     password,
   });
 
@@ -51,18 +62,14 @@ export async function loginUser(credentials) {
   }
 
   const response = await api.post("/auth/login", {
-    email: email.trim(),
+    email: email.trim().toLowerCase(),
     password,
   });
 
-  // The caller handles the returned user and token.
-  // Do not store the token here.
   return response.data;
 }
 
 // GET /api/auth/me
-// Requires a backend endpoint that verifies the bearer token
-// and returns the currently authenticated user's profile.
 export async function getCurrentUser() {
   const response = await api.get("/auth/me");
   return response.data;
